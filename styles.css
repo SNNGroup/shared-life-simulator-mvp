@@ -308,6 +308,23 @@ h3 {
   max-width: 780px;
 }
 
+.locked-list {
+  margin: 18px 0 18px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: rgba(255, 249, 239, 0.86);
+  border: 1px solid rgba(31, 27, 22, 0.08);
+}
+
+.locked-list strong {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.compact-list {
+  margin-top: 0;
+}
+
 .result-grid {
   margin-top: 22px;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
