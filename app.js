@@ -33,23 +33,31 @@ const questions = [
   {
     id: "q1_start",
     dimension: "roles",
-    title: "Ви вирішили жити разом. Перший місяць проходить спокійно.",
-    question: "Що ви обговорюєте першим?",
+    title: "Ви з'їхались. Поки що все виглядає нормально.",
+    question: "Що з'являється першим, коли легкість закінчується?",
     options: [
-      { id: "q1_a", text: "Хто за що платить", mapping: { type: "defined", vector: "money" } },
+      {
+        id: "q1_a",
+        text: "Хто і за що платить",
+        caption: "Бо саме тут несправедливість відчувається найшвидше",
+        mapping: { type: "defined", vector: "money" },
+      },
       {
         id: "q1_b",
-        text: "Як кожен хоче жити і скільки особистого простору потрібно",
+        text: "Як ми живемо разом і скільки кожному потрібно простору",
+        caption: "Бо різний ритм починає дратувати ще до серйозних тем",
         mapping: { type: "defined", vector: "boundaries" },
       },
       {
         id: "q1_c",
-        text: "Поки нічого, розберемося по ходу",
+        text: "Нічого, ми не обговорювали наперед",
+        caption: "І перші правила з'являються вже під час конфлікту",
         mapping: { type: "undefined", vector: "none" },
       },
       {
         id: "q1_d",
         text: "Залежить від ситуації",
+        caption: "Ми не домовляємось наперед і щоразу починаємо заново",
         mapping: { type: "conditional", vector: "flex" },
       },
     ],
@@ -57,23 +65,31 @@ const questions = [
   {
     id: "q2_money",
     dimension: "money",
-    title: "Один заробляє помітно більше за іншого.",
-    question: "Як ви бачите розподіл витрат?",
+    title: "Один починає заробляти значно більше.",
+    question: "Як у цей момент змінюється справедливість у парі?",
     options: [
-      { id: "q2_a", text: "Ділимо 50/50", mapping: { type: "defined", vector: "equal" } },
+      {
+        id: "q2_a",
+        text: "Ділимо 50/50",
+        caption: "Формально рівно, але це не завжди відчувається чесно",
+        mapping: { type: "defined", vector: "equal" },
+      },
       {
         id: "q2_b",
         text: "Пропорційно доходу",
+        caption: "Ми враховуємо різницю ресурсів",
         mapping: { type: "defined", vector: "proportional" },
       },
       {
         id: "q2_c",
-        text: "Один платить більше, другий закриває інші задачі",
+        text: "Один платить більше, інший бере на себе інше",
+        caption: "Ми міняємося ролями, але не все проговорено",
         mapping: { type: "conditional", vector: "tradeoff" },
       },
       {
         id: "q2_d",
         text: "Ми це не обговорювали",
+        caption: "І кожен починає відчувати: я вкладаюсь більше",
         mapping: { type: "undefined", vector: "none" },
       },
     ],
@@ -81,27 +97,31 @@ const questions = [
   {
     id: "q3_roles",
     dimension: "roles",
-    title: "З часом з'являється відчуття: хтось вкладається більше.",
-    question: "Що для вас вважається рівним внеском?",
+    title: "З часом один починає відчувати: я вкладаюсь більше.",
+    question: "Як ви визначаєте, що внесок справедливий?",
     options: [
       {
         id: "q3_a",
-        text: "Головне — гроші",
+        text: "Хто більше заробляє — той більше вкладається",
+        caption: "Інший вклад майже не враховується",
         mapping: { type: "defined", vector: "money_priority" },
       },
       {
         id: "q3_b",
         text: "Гроші, побут і емоційне навантаження однаково важливі",
+        caption: "Ми дивимось на вклад ширше",
         mapping: { type: "defined", vector: "balanced" },
       },
       {
         id: "q3_c",
-        text: "У кожного своя зона, порівнювати не треба",
+        text: "У кожного своя зона — порівнювати не потрібно",
+        caption: "Ми не рахуємо, але образа може накопичуватись",
         mapping: { type: "conditional", vector: "separate" },
       },
       {
         id: "q3_d",
         text: "Ми це не формулювали",
+        caption: "І кожен рахує справедливість по-своєму",
         mapping: { type: "undefined", vector: "none" },
       },
     ],
@@ -109,27 +129,31 @@ const questions = [
   {
     id: "q4_boundaries",
     dimension: "boundaries",
-    title: "Виникає конфлікт, і один обговорює його з близькими.",
-    question: "Наскільки це для вас нормально?",
+    title: "Виникає конфлікт, і він виходить за межі пари.",
+    question: "Де для вас межа між підтримкою і виносити назовні?",
     options: [
       {
         id: "q4_a",
-        text: "Це нормально, зовнішній погляд корисний",
+        text: "Це нормально — інша думка допомагає",
+        caption: "Але треті люди починають впливати на вашу пару",
         mapping: { type: "externalized", vector: "open" },
       },
       {
         id: "q4_b",
         text: "Іноді можна, але є межі",
+        caption: "Проблема в тому, що ці межі рідко однакові для обох",
         mapping: { type: "conditional", vector: "limited" },
       },
       {
         id: "q4_c",
         text: "Це внутрішня тема пари",
+        caption: "Ми не виносимо конфлікти назовні",
         mapping: { type: "defined", vector: "closed" },
       },
       {
         id: "q4_d",
         text: "Залежить від ситуації",
+        caption: "І тоді кожен сам вирішує, коли можна виносити назовні",
         mapping: { type: "conditional", vector: "flex" },
       },
     ],
@@ -137,27 +161,31 @@ const questions = [
   {
     id: "q5_decisions",
     dimension: "decisions",
-    title: "Один приймає важливе рішення без обговорення.",
-    question: "Що для вас тут правильно?",
+    title: "Один із вас приймає важливе рішення без обговорення.",
+    question: "Хто насправді має право вирішувати?",
     options: [
       {
         id: "q5_a",
-        text: "Якщо це особисті гроші — можна вирішувати самому",
+        text: "Якщо це мої гроші — я вирішую сам",
+        caption: "Але це рішення все одно впливає на обох",
         mapping: { type: "defined", vector: "personal_zone" },
       },
       {
         id: "q5_b",
-        text: "Великі рішення завжди обговорюються",
+        text: "Великі рішення ми приймаємо разом",
+        caption: "Бо вони змінюють життя обох",
         mapping: { type: "defined", vector: "shared" },
       },
       {
         id: "q5_c",
         text: "Є особисті й спільні рішення",
+        caption: "Питання в тому, де саме проходить ця межа",
         mapping: { type: "conditional", vector: "mixed" },
       },
       {
         id: "q5_d",
         text: "Ми це не визначали",
+        caption: "І під час стресу починається боротьба за право вирішувати",
         mapping: { type: "undefined", vector: "none" },
       },
     ],
@@ -165,27 +193,31 @@ const questions = [
   {
     id: "q6_future",
     dimension: "future",
-    title: "Один думає про дитину, другий не впевнений.",
-    question: "Що тут головне?",
+    title: "Ви не однаково бачите майбутнє.",
+    question: "Як приймається рішення, яке не можна відкотити?",
     options: [
       {
         id: "q6_a",
-        text: "Рішення має бути повністю взаємним",
+        text: "Це має бути повністю взаємне рішення",
+        caption: "Інакше хтось залишиться з відчуттям тиску",
         mapping: { type: "defined", vector: "mutual" },
       },
       {
         id: "q6_b",
         text: "Спершу умови: гроші, стабільність",
+        caption: "Раціонально, але це не завжди вирішує різницю в бажанні",
         mapping: { type: "conditional", vector: "conditions" },
       },
       {
         id: "q6_c",
         text: "Хто більше готовий — того голос важливіший",
+        caption: "Інший може погодитись, але не прийняти це внутрішньо",
         mapping: { type: "externalized", vector: "pressure" },
       },
       {
         id: "q6_d",
         text: "Ми це не обговорювали",
+        caption: "І це питання повернеться в найскладніший момент",
         mapping: { type: "undefined", vector: "none" },
       },
     ],
@@ -351,7 +383,7 @@ function renderQuestion() {
   question.options.forEach((option) => {
     const button = document.createElement("button");
     button.className = "option-btn";
-    button.innerHTML = `<strong>${option.text}</strong><span>${typeLabel(option.mapping.type)}</span>`;
+    button.innerHTML = `<strong>${option.text}</strong><span>${option.caption || typeLabel(option.mapping.type)}</span>`;
     button.addEventListener("click", () => {
       state.answers[state.currentIndex] = {
         questionId: question.id,
