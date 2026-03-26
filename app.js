@@ -2,29 +2,30 @@ const STORAGE_KEY = "shared-life-simulator-mvp-v1";
 
 const scenarios = [
   {
+    id: "clarity",
+    title: "Хочемо зрозуміти, як у нас усе влаштовано",
+    description: "Побачити, де у вас уже різні правила життя і прихована напруга.",
+    recommended: true,
+  },
+  {
     id: "cohabit",
     title: "Ми думаємо з'їхатися",
-    description: "Хочемо зрозуміти, як буде влаштоване життя разом.",
+    description: "Як буде влаштоване життя разом — і де починаються перші розбіжності.",
   },
   {
     id: "budget",
     title: "У нас з'являється спільний бюджет",
-    description: "Гроші, витрати, відповідальність і справедливість.",
+    description: "Як ділити гроші — і що вважати справедливим.",
   },
   {
     id: "marriage",
     title: "Ми думаємо про шлюб",
-    description: "Без ілюзій, з розумінням наслідків і правил.",
+    description: "Які правила увімкнуться після оформлення і що це реально змінить.",
   },
   {
     id: "child",
     title: "Ми думаємо про дитину",
-    description: "Ролі, навантаження, рішення і спільне майбутнє.",
-  },
-  {
-    id: "clarity",
-    title: "Хочемо зрозуміти, як у нас усе влаштовано",
-    description: "Побачити очікування, розходження і приховані напруги.",
+    description: "Хто буде вирішувати, нести навантаження і змінювати ритм життя.",
   },
 ];
 
@@ -318,8 +319,12 @@ function renderScenarios() {
   scenarioOptionsEl.innerHTML = "";
   scenarios.forEach((scenario) => {
     const button = document.createElement("button");
-    button.className = "scenario-btn";
-    button.innerHTML = `<strong>${scenario.title}</strong><span>${scenario.description}</span>`;
+    button.className = `scenario-btn${scenario.recommended ? " recommended" : ""}`;
+    button.innerHTML = `
+      ${scenario.recommended ? '<span class="scenario-badge">Рекомендуємо почати тут</span>' : ""}
+      <strong>${scenario.title}</strong>
+      <span>${scenario.description}</span>
+    `;
     button.addEventListener("click", () => {
       state.selectedScenario = scenario.id;
       state.currentIndex = 0;
