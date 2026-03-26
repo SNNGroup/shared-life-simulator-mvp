@@ -141,6 +141,65 @@
             </div>
           </div>
 
+          <div class="interest-card">
+            <h3>Хочете повну версію або пройти це з партнером?</h3>
+            <p class="lead-small">
+              Якщо це відгукнулося, залиште контакт. Так буде видно не просто цікавість, а реальний намір повернутись до продукту.
+            </p>
+
+            <div class="interest-toggle" role="group" aria-label="Тип інтересу">
+              <button type="button" class="interest-chip active" data-interest="full_version">
+                Хочу повну версію
+              </button>
+              <button type="button" class="interest-chip" data-interest="pair_mode">
+                Хочу пройти це з партнером
+              </button>
+            </div>
+
+            <form
+              id="interest-form"
+              class="interest-form"
+              name="result-interest"
+              method="POST"
+              data-netlify="true"
+              netlify-honeypot="bot-field"
+            >
+              <input type="hidden" name="form-name" value="result-interest" />
+              <input type="hidden" name="bot-field" />
+              <input type="hidden" id="interest-type" name="interest_type" value="full_version" />
+              <input type="hidden" id="interest-scenario" name="scenario" value="" />
+              <input type="hidden" id="interest-zone" name="primary_zone" value="" />
+              <input type="hidden" id="interest-result-title" name="result_title" value="" />
+
+              <label class="interest-field">
+                <span>Контакт</span>
+                <input
+                  id="interest-contact"
+                  name="contact"
+                  type="text"
+                  placeholder="Email або Telegram"
+                  autocomplete="email"
+                  required
+                />
+              </label>
+
+              <label class="interest-field">
+                <span>Що вам ближче</span>
+                <textarea
+                  id="interest-note"
+                  name="note"
+                  rows="3"
+                  placeholder="Наприклад: хочу пройти це разом / цікава повна версія / надішліть, коли буде доступ"
+                ></textarea>
+              </label>
+
+              <div class="interest-actions">
+                <button type="submit" class="primary-btn">Залишити контакт</button>
+                <p id="interest-status" class="subtle"></p>
+              </div>
+            </form>
+          </div>
+
           <div class="actions-row">
             <button id="restart-btn" class="secondary-btn">Пройти інший сценарій</button>
           </div>

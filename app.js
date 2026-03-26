@@ -500,6 +500,56 @@ const storyPatternEl = document.getElementById("story-pattern");
 const storyHitEl = document.getElementById("story-hit");
 const resultClosureEl = document.getElementById("result-closure");
 const resultClosureTextEl = document.getElementById("result-closure-text");
+const interestFormEl = document.getElementById("interest-form");
+const interestTypeEl = document.getElementById("interest-type");
+const interestScenarioEl = document.getElementById("interest-scenario");
+const interestZoneEl = document.getElementById("interest-zone");
+const interestResultTitleEl = document.getElementById("interest-result-title");
+const interestStatusEl = document.getElementById("interest-status");
+const interestChips = Array.from(document.querySelectorAll(".interest-chip"));
+
+interestChips.forEach((chip) => {
+  chip.addEventListener("click", () => {
+    const interest = chip.dataset.interest || "full_version";
+    interestTypeEl.value = interest;
+    interestChips.forEach((item) => item.classList.toggle("active", item === chip));
+  });
+});
+
+interestFormEl.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  interestStatusEl.textContent = "Надсилаємо...";
+
+  const formData = new FormData(interestFormEl);
+  const payload = new URLSearchParams(formData).toString();
+
+  try {
+    const response = await fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: payload,
+    });
+
+    if (!response.ok) {
+      throw new Error("submit_failed");
+    }
+
+    interestStatusEl.textContent = "Контакт збережено. Це вже можна використовувати як сигнал реального інтересу.";
+    const savedScenario = interestScenarioEl.value;
+    const savedZone = interestZoneEl.value;
+    const savedTitle = interestResultTitleEl.value;
+    interestFormEl.reset();
+    interestTypeEl.value = "full_version";
+    interestScenarioEl.value = savedScenario;
+    interestZoneEl.value = savedZone;
+    interestResultTitleEl.value = savedTitle;
+    interestChips.forEach((chip) =>
+      chip.classList.toggle("active", chip.dataset.interest === "full_version")
+    );
+  } catch {
+    interestStatusEl.textContent = "Не вдалося надіслати зараз. Спробуйте ще раз через хвилину.";
+  }
+});
 
 document.getElementById("start-btn").addEventListener("click", () => {
   resetSession(false);
@@ -802,6 +852,11 @@ function renderFullResult() {
     resultClosureEl.classList.add("hidden");
     resultClosureTextEl.textContent = "";
   }
+
+  interestScenarioEl.value = state.selectedScenario || "";
+  interestZoneEl.value = primaryZone.dimension;
+  interestResultTitleEl.value = card.title;
+  interestStatusEl.textContent = "";
 
   fullZonesEl.appendChild(createZoneCard(primaryZone, { primary: true }));
 
