@@ -298,7 +298,7 @@ const finalCardArchetypes = {
     bridge: "Повна карта покаже, у якому саме місці ваші уявлення про майбутнє розходяться.",
   },
   partially_aligned_drift: {
-    title: "Зовні у вас вже є домовленості, але система повільно розходиться",
+    title: "Ви домовляєтесь. Але щоразу трохи по-різному.",
     core: "Ви не в хаосі, але і не в повній ясності: правила є, проте кожен трохи інакше розуміє, як вони працюють.",
     next: "Замість одного великого конфлікту у вас може виникати серія малих повторюваних зіткнень.",
     hidden: "Найбільший ризик тут — ілюзія, що у нас все вже більш-менш узгоджено.",
@@ -396,6 +396,16 @@ const postPaywallScenarios = {
     hit:
       "І поступово це вже не про гроші, а про відчуття: мене тут недооцінюють.",
   },
+  roles: {
+    scene:
+      "У щоденних речах ніби все працює. Кожен щось робить, підхоплює, вирішує.",
+    conflict:
+      "Але в якийсь момент один починає відчувати: я тягну більше. Інший — що все відбувається нормально.",
+    pattern:
+      "Спочатку це не проговорюється. Потім дрібні моменти починають складатись у відчуття, що баланс порушений.",
+    hit:
+      "І саме в таких речах напруга не вибухає одразу, а накопичується як тиха образа.",
+  },
   decisions: {
     scene:
       "Ви стикаєтесь із рішенням: гроші, плани, зміни. І здається, що ви обговорюєте разом. Але в якийсь момент рішення все одно приймає хтось один.",
@@ -416,6 +426,29 @@ const postPaywallScenarios = {
     hit:
       "І в якийсь момент з'являється відчуття: наші рішення — не зовсім наші.",
   },
+  future: {
+    scene:
+      "Ви говорите про майбутнє ніби про одне й те саме. Але вкладаєте в нього різні очікування.",
+    conflict:
+      "Один говорить про готовність і бажання. Інший — про умови, час і стабільність. Формально це одна розмова, але по суті ні.",
+    pattern:
+      "І щоразу, коли тема повертається, ви ніби знову починаєте з початку — без однієї спільної точки, від якої можна рухатись далі.",
+    hit:
+      "І тоді майбутнє перестає бути опорою. Воно саме стає джерелом напруги.",
+  },
+};
+
+const scenarioClosures = {
+  child:
+    "І саме тому питання про дитину не стане точкою стабільності. Воно тільки підсилить те, що вже зараз не узгоджено між вами.",
+  marriage:
+    "Оформлення шлюбу не змінить цю модель. Воно лише зафіксує її у більш жорсткій формі.",
+  cohabit:
+    "Спільне життя не вирішить це автоматично. Воно просто зробить ці моменти щоденними.",
+  budget:
+    "Спільний бюджет не зніме ці питання. Він лише зробить їх більш частими і помітними.",
+  default:
+    "Ця ситуація не вирішиться сама. Вона просто стане більш помітною з часом.",
 };
 
 const state = {
@@ -465,6 +498,8 @@ const storySceneEl = document.getElementById("story-scene");
 const storyConflictEl = document.getElementById("story-conflict");
 const storyPatternEl = document.getElementById("story-pattern");
 const storyHitEl = document.getElementById("story-hit");
+const resultClosureEl = document.getElementById("result-closure");
+const resultClosureTextEl = document.getElementById("result-closure-text");
 
 document.getElementById("start-btn").addEventListener("click", () => {
   resetSession(false);
@@ -727,6 +762,7 @@ function renderFullResult() {
   const { card, zones } = matchFinalCard(aggregated);
   const primaryZone = getPrimaryTensionZone(zones);
   const story = postPaywallScenarios[primaryZone.dimension];
+  const closureText = scenarioClosures[state.selectedScenario] || scenarioClosures.default;
 
   resultRegimeTitleEl.textContent = card.title;
   resultRegimeTextEl.textContent = card.hidden;
@@ -757,6 +793,14 @@ function renderFullResult() {
     storyConflictEl.textContent = "";
     storyPatternEl.textContent = "";
     storyHitEl.textContent = "";
+  }
+
+  if (closureText) {
+    resultClosureEl.classList.remove("hidden");
+    resultClosureTextEl.textContent = closureText;
+  } else {
+    resultClosureEl.classList.add("hidden");
+    resultClosureTextEl.textContent = "";
   }
 
   fullZonesEl.appendChild(createZoneCard(primaryZone, { primary: true }));
