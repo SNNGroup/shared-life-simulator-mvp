@@ -645,18 +645,22 @@ function matchFinalCard(aggregated = aggregateAnswers()) {
   };
 }
 
-function renderPaywall(card, zones) {
-  paywallTitleEl.textContent = "Подивитися, як це почне проявлятися в реальному житті";
-  paywallCopyEl.textContent = card.hidden;
-  paywallIntroEl.textContent = "Це не тест. Це вже ваша модель рішень.";
+function getPrimaryTensionZone(zones) {
+  return zones.find((zone) => zone.status !== "defined") || zones[0];
+}
 
-  const firstConflictZone = zones.find((zone) => zone.status !== "defined") || zones[0];
+function renderPaywall(card, zones) {
+  paywallTitleEl.textContent = "Далі — як саме це проявляється у вас";
+  paywallCopyEl.textContent = card.hidden;
+  paywallIntroEl.textContent = "Ви вже відповіли так, що ця модель почала формуватись.";
+
+  const firstConflictZone = getPrimaryTensionZone(zones);
   paywallListEl.innerHTML = "";
 
   [
-    `де саме у вас почне повторюватися напруга в зоні “${translateDimension(firstConflictZone.dimension)}”`,
-    "який сценарій конфлікту у вас запускається першим",
-    "які правила у вас поки що тримаються тільки на мовчазних домовленостях",
+    `де саме у вас вже повторюється напруга в зоні “${translateDimension(firstConflictZone.dimension)}”`,
+    "яка зона дасть перший конфлікт",
+    "як це виглядає у ваших реальних ситуаціях",
   ].forEach((text) => {
     paywallListEl.appendChild(createListItem(text));
   });
@@ -666,24 +670,23 @@ function renderPaywall(card, zones) {
 
 function renderPreview() {
   const { card, zones } = matchFinalCard();
+  const primaryZone = getPrimaryTensionZone(zones);
   previewTitleEl.textContent = card.title;
-  previewLeadEl.textContent =
-    "Зараз видно тільки перший патерн. Саме так повторювані конфлікти виглядають до того, як їх починають помічати.";
+  previewLeadEl.textContent = "Зараз видно тільки один ключовий патерн.";
   previewSummaryEl.innerHTML = `
     <p>${card.core}</p>
-    <p><strong>${card.next}</strong></p>
-    <div class="preview-cut">Зараз це ще виглядає як окремі дрібні теми. Насправді це вже одна й та сама модель рішень.</div>
+    <p><strong>І в однакових ситуаціях ви щоразу домовляєтесь заново.</strong></p>
+    <div class="preview-cut">Зараз це майже не видно. Але саме тут з'являються повторювані конфлікти.</div>
   `;
   previewZonesEl.innerHTML = "";
-  zones.slice(0, 2).forEach((zone) => {
-    previewZonesEl.appendChild(createZoneCard(zone));
-  });
+  previewZonesEl.appendChild(createZoneCard(primaryZone, { primary: true }));
   renderPaywall(card, zones);
 }
 
 function renderFullResult() {
   const aggregated = aggregateAnswers();
   const { card, zones } = matchFinalCard(aggregated);
+  const primaryZone = getPrimaryTensionZone(zones);
 
   resultRegimeTitleEl.textContent = card.title;
   resultRegimeTextEl.textContent = card.hidden;
@@ -693,21 +696,25 @@ function renderFullResult() {
   undefinedAreasEl.innerHTML = "";
   conflictsEl.innerHTML = "";
 
-  zones.forEach((zone) => fullZonesEl.appendChild(createZoneCard(zone)));
+  fullZonesEl.appendChild(createZoneCard(primaryZone, { primary: true }));
+  zones
+    .filter((zone) => zone.dimension !== primaryZone.dimension)
+    .forEach((zone) => fullZonesEl.appendChild(createZoneCard(zone)));
 
-  const definedAreas = zones
+  const definedAreas = ["Ви вже живете як пара, але правила ще не стали спільною системою."];
+  zones
     .filter((zone) => zone.status === "defined")
-    .map((zone) => dimensionMessages[zone.dimension].defined);
+    .map((zone) => dimensionMessages[zone.dimension].defined)
+    .slice(0, 2)
+    .forEach((text) => definedAreas.push(text));
   const undefinedAreas = zones
     .filter((zone) => zone.status !== "defined")
-    .map((zone) => zone.message);
+    .map((zone) => zone.message)
+    .slice(0, 3);
   const conflicts = zones
     .map((zone) => conflictMessages[`${zone.dimension}_${zone.status}`])
-    .filter(Boolean);
-
-  if (definedAreas.length === 0) {
-    definedAreas.push("У вас поки мало чітко зафіксованих правил спільного життя.");
-  }
+    .filter(Boolean)
+    .slice(0, 3);
 
   if (undefinedAreas.length === 0) {
     undefinedAreas.push("Явних провалів мало, але частина правил усе одно може залишатися мовчазною і неперевіреною.");
@@ -722,9 +729,9 @@ function renderFullResult() {
   conflicts.forEach((text) => conflictsEl.appendChild(createListItem(text)));
 }
 
-function createZoneCard(zone) {
+function createZoneCard(zone, options = {}) {
   const wrapper = document.createElement("div");
-  wrapper.className = "zone-card";
+  wrapper.className = `zone-card${options.primary ? " primary-zone" : ""}`;
   wrapper.innerHTML = `<strong>${translateDimension(zone.dimension)}</strong><p>${zone.message}</p>`;
   return wrapper;
 }
