@@ -401,6 +401,10 @@ h3 {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
+.result-grid-primary {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .result-story {
   margin-top: 22px;
   padding: 20px;

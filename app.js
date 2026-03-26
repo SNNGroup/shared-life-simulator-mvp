@@ -760,9 +760,6 @@ function renderFullResult() {
   }
 
   fullZonesEl.appendChild(createZoneCard(primaryZone, { primary: true }));
-  zones
-    .filter((zone) => zone.dimension !== primaryZone.dimension)
-    .forEach((zone) => fullZonesEl.appendChild(createZoneCard(zone)));
 
   const definedAreas = ["Ви вже живете як пара, але правила ще не стали спільною системою."];
   zones
