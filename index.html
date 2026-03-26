@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shared Life Simulator MVP</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section id="hero-screen" class="screen active">
+        <div class="hero-card">
+          <p class="eyebrow">Serious Relationship Simulator</p>
+          <h1>Ви хочете спокійне життя удвох. Подивіться, як воно насправді влаштоване.</h1>
+          <p class="lead">
+            Це не тест на стосунки і не поради. Це симуляція реальних рішень, з яких складається
+            ваше спільне життя.
+          </p>
+          <p class="micro-trust">Гроші · межі · побут · рішення · вплив батьків</p>
+          <div id="resume-box" class="resume-box hidden">
+            <strong>У вас є незавершена сесія.</strong>
+            <p id="resume-text"></p>
+            <div class="inline-actions">
+              <button id="resume-btn" class="primary-btn">Продовжити</button>
+              <button id="reset-session-btn" class="secondary-btn">Почати заново</button>
+            </div>
+          </div>
+          <button id="start-btn" class="primary-btn">Пройти симуляцію</button>
+          <p class="subtle">Займе 5–7 хвилин</p>
+        </div>
+      </section>
+
+      <section id="scenario-screen" class="screen">
+        <div class="content-card narrow">
+          <p class="eyebrow">Крок 1</p>
+          <h2>Де ви зараз у вашому спільному житті?</h2>
+          <p class="lead-small">Оберіть те, що найближче. З цього почнеться симуляція.</p>
+          <div id="scenario-options" class="scenario-grid"></div>
+          <p class="subtle">Жодних правильних відповідей — тільки ваша модель життя.</p>
+        </div>
+      </section>
+
+      <section id="question-screen" class="screen">
+        <div class="content-card">
+          <div class="top-row">
+            <div>
+              <p class="eyebrow" id="question-step">Крок 2</p>
+              <p id="scenario-pill" class="scenario-pill"></p>
+            </div>
+            <div class="progress-wrap">
+              <div class="progress-track">
+                <div id="progress-bar" class="progress-bar"></div>
+              </div>
+            </div>
+          </div>
+          <h2 id="question-title"></h2>
+          <p id="question-text" class="lead-small"></p>
+          <div id="question-options" class="option-list"></div>
+        </div>
+      </section>
+
+      <section id="wow-screen" class="screen">
+        <div class="content-card narrow wow-card">
+          <p class="eyebrow">Перший інсайт</p>
+          <h2>У вас уже є розходження в кількох ключових зонах.</h2>
+          <p class="lead-small">
+            Це не про почуття. Це про різні правила життя, які зазвичай проявляються пізніше як
+            напруга, образа або боротьба за контроль.
+          </p>
+          <button id="continue-after-wow" class="primary-btn">Продовжити</button>
+        </div>
+      </section>
+
+      <section id="preview-screen" class="screen">
+        <div class="content-card">
+          <p class="eyebrow">Результат</p>
+          <h2>Ви вже побачили не “проблеми”, а різні правила життя.</h2>
+          <p class="lead-small">
+            Нижче — лише короткий зріз. Саме в цих зонах у пар найчастіше починаються повторювані
+            конфлікти.
+          </p>
+          <div id="preview-summary" class="preview-summary"></div>
+          <div id="preview-zones" class="zone-list"></div>
+          <div class="paywall-card">
+            <h3>Відкрити повну карту різниць</h3>
+            <p>
+              Далі — ваш реальний режим, усі зони напруги, потенційні конфлікти і те, де саме
+              система вже тримається на неявних правилах.
+            </p>
+            <button id="unlock-btn" class="primary-btn">Відкрити повну карту</button>
+            <p class="subtle">
+              У цій демо-версії оплата ще не підключена. Кнопка відкриває повний результат для
+              перевірки сценарію.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="result-screen" class="screen">
+        <div class="content-card">
+          <p class="eyebrow">Повна карта</p>
+          <h2 id="result-regime-title"></h2>
+          <p id="result-regime-text" class="lead-small"></p>
+
+          <div class="result-grid">
+            <div class="result-block">
+              <h3>Ключові зони</h3>
+              <div id="full-zones" class="zone-list compact"></div>
+            </div>
+            <div class="result-block">
+              <h3>Що вже є</h3>
+              <ul id="defined-areas" class="bullet-list"></ul>
+            </div>
+            <div class="result-block">
+              <h3>Що не визначено</h3>
+              <ul id="undefined-areas" class="bullet-list"></ul>
+            </div>
+            <div class="result-block">
+              <h3>Що може дати конфлікт</h3>
+              <ul id="conflicts" class="bullet-list"></ul>
+            </div>
+          </div>
+
+          <div class="actions-row">
+            <button id="restart-btn" class="secondary-btn">Почати заново</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
