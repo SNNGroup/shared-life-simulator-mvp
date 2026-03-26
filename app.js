@@ -388,33 +388,33 @@ const conflictMessages = {
 const postPaywallScenarios = {
   money: {
     scene:
-      "Ситуація: ви обговорюєте витрати або спільні гроші. Ви виходите з того, що це логічно і справедливо, а партнер — що це не зовсім чесно. Ви ніби домовляєтесь, але кожен лишається при своєму.",
-    repeat:
-      "Це вже починає повторюватись у витратах, побутових рішеннях і плануванні наперед. Це не одна ситуація — це модель, яка повертається.",
-    next:
-      "Спочатку це виглядає як дрібні розбіжності. Потім з'являється відчуття: я вкладаюсь більше або зі мною не зовсім чесно. І в якийсь момент це переходить у відкритий конфлікт.",
-    why:
-      "Проблема не в грошах. Проблема в тому, що у вас різне розуміння як правильно і немає одного спільного правила.",
+      "Ви щось купуєте або плануєте витрати. І в якийсь момент звучить: чому знову я або ми ж домовлялись інакше. І навіть дрібна річ раптом стає напруженням.",
+    conflict:
+      "Один відчуває, що вкладається більше. Інший — що все нормально. Але ці відчуття не співпадають.",
+    pattern:
+      "І кожна нова витрата знову піднімає це питання. Без чіткої відповіді, що для вас означає справедливо.",
+    hit:
+      "І поступово з'являється не розмова про гроші, а відчуття: мене тут недооцінюють.",
   },
   decisions: {
     scene:
-      "Ситуація: потрібно прийняти важливе рішення. Один з вас думає: це моя зона, я можу вирішити сам. Інший — що такі речі треба обговорювати разом. Рішення приймається, але без повного узгодження.",
-    repeat:
-      "Це вже починає повторюватись у фінансових рішеннях, плануванні і важливих життєвих виборах. Це не випадковість — це спосіб, як ви приймаєте рішення.",
-    next:
-      "Спочатку це виглядає як дрібні моменти. Потім з'являється відчуття: зі мною не порадились або мене поставили перед фактом. І це переходить у конфлікт про контроль і повагу.",
-    why:
-      "Проблема не в самому рішенні. Проблема в тому, що у вас різне розуміння, де закінчується особисте і починається спільне.",
+      "Ви стикаєтесь із рішенням: гроші, плани, зміни. І здається, що ви обговорюєте разом. Але в якийсь момент рішення все одно приймає хтось один.",
+    conflict:
+      "Один відчуває: я просто погоджуюсь. Інший — ми ж вирішили разом. Але це різні реальності.",
+    pattern:
+      "І це повторюється. Зовні — ніби компроміс. Всередині — різне відчуття контролю.",
+    hit:
+      "І з часом з'являється напруга: я тут не до кінця впливаю на своє життя.",
   },
   boundaries: {
     scene:
-      "Ситуація: виникає конфлікт або складна тема. Один із вас виносить це назовні — до батьків або близьких. Інший очікує, що це залишиться між вами. Після цього щось змінюється у відчутті довіри.",
-    repeat:
-      "Це вже починає повторюватись у конфліктах, у порадах зі сторони і у важливих рішеннях. Це не одна ситуація — це те, як у вашу пару заходять інші.",
-    next:
-      "Спочатку це виглядає як допомога або підтримка. Потім з'являється відчуття: це вже не тільки між нами або мене винесли назовні. І це переходить у конфлікт про довіру і межі.",
-    why:
-      "Проблема не в самих порадах. Проблема в тому, що у вас немає спільного правила: що залишається між вами, а що виходить назовні.",
+      "Ви щось вирішили разом. А потім хтось із близьких каже: а навіщо вам це або я б зробив інакше. І раптом рішення, яке вже було вашим, знову стає відкритим питанням.",
+    conflict:
+      "Один із вас починає сумніватись. Інший — відчуває, що межі порушені. І замість ми вирішили ви знову повертаєтесь до обговорення.",
+    pattern:
+      "І це повторюється. Не через інших людей. А тому що у вас різне відчуття, де закінчується ви.",
+    hit:
+      "І в якийсь момент з'являється відчуття: наші рішення — не зовсім наші.",
   },
 };
 
@@ -461,9 +461,9 @@ const resultRegimeTitleEl = document.getElementById("result-regime-title");
 const resultRegimeTextEl = document.getElementById("result-regime-text");
 const resultStoryEl = document.getElementById("result-story");
 const storySceneEl = document.getElementById("story-scene");
-const storyRepeatEl = document.getElementById("story-repeat");
-const storyNextEl = document.getElementById("story-next");
-const storyWhyEl = document.getElementById("story-why");
+const storyConflictEl = document.getElementById("story-conflict");
+const storyPatternEl = document.getElementById("story-pattern");
+const storyHitEl = document.getElementById("story-hit");
 
 document.getElementById("start-btn").addEventListener("click", () => {
   resetSession(false);
@@ -738,15 +738,15 @@ function renderFullResult() {
   if (story) {
     resultStoryEl.classList.remove("hidden");
     storySceneEl.textContent = story.scene;
-    storyRepeatEl.textContent = story.repeat;
-    storyNextEl.textContent = story.next;
-    storyWhyEl.textContent = story.why;
+    storyConflictEl.textContent = story.conflict;
+    storyPatternEl.textContent = story.pattern;
+    storyHitEl.textContent = story.hit;
   } else {
     resultStoryEl.classList.add("hidden");
     storySceneEl.textContent = "";
-    storyRepeatEl.textContent = "";
-    storyNextEl.textContent = "";
-    storyWhyEl.textContent = "";
+    storyConflictEl.textContent = "";
+    storyPatternEl.textContent = "";
+    storyHitEl.textContent = "";
   }
 
   fullZonesEl.appendChild(createZoneCard(primaryZone, { primary: true }));

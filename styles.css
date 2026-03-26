@@ -413,28 +413,21 @@ h3 {
   margin-bottom: 14px;
 }
 
-.result-story-grid {
-  display: grid;
-  gap: 12px;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-}
-
-.result-story-block {
+.result-story-flow {
   padding: 16px 18px;
   border-radius: 18px;
   border: 1px solid rgba(31, 27, 22, 0.08);
   background: rgba(255, 249, 239, 0.88);
 }
 
-.result-story-block strong {
-  display: block;
-  margin-bottom: 8px;
-}
-
-.result-story-block p {
-  margin: 0;
+.result-story-flow p {
+  margin: 0 0 12px;
   color: var(--muted);
   line-height: 1.5;
+}
+
+.result-story-flow p:last-child {
+  margin-bottom: 0;
 }
 
 .result-block {
