@@ -536,6 +536,24 @@ h3 {
   align-items: center;
 }
 
+.interest-success {
+  margin-top: 18px;
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(23, 60, 52, 0.16);
+  background: rgba(255, 249, 239, 0.92);
+}
+
+.interest-success h4 {
+  margin-bottom: 8px;
+}
+
+.interest-success p {
+  margin: 0 0 14px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
 .bullet-list {
   margin: 12px 0 0;
   padding-left: 18px;

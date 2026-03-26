@@ -506,6 +506,8 @@ const interestScenarioEl = document.getElementById("interest-scenario");
 const interestZoneEl = document.getElementById("interest-zone");
 const interestResultTitleEl = document.getElementById("interest-result-title");
 const interestStatusEl = document.getElementById("interest-status");
+const interestSuccessEl = document.getElementById("interest-success");
+const interestAnotherBtnEl = document.getElementById("interest-another-btn");
 const interestChips = Array.from(document.querySelectorAll(".interest-chip"));
 
 interestChips.forEach((chip) => {
@@ -514,6 +516,12 @@ interestChips.forEach((chip) => {
     interestTypeEl.value = interest;
     interestChips.forEach((item) => item.classList.toggle("active", item === chip));
   });
+});
+
+interestAnotherBtnEl.addEventListener("click", () => {
+  interestSuccessEl.classList.add("hidden");
+  interestFormEl.classList.remove("hidden");
+  interestStatusEl.textContent = "";
 });
 
 interestFormEl.addEventListener("submit", async (event) => {
@@ -534,7 +542,6 @@ interestFormEl.addEventListener("submit", async (event) => {
       throw new Error("submit_failed");
     }
 
-    interestStatusEl.textContent = "Контакт збережено. Це вже можна використовувати як сигнал реального інтересу.";
     const savedScenario = interestScenarioEl.value;
     const savedZone = interestZoneEl.value;
     const savedTitle = interestResultTitleEl.value;
@@ -546,6 +553,9 @@ interestFormEl.addEventListener("submit", async (event) => {
     interestChips.forEach((chip) =>
       chip.classList.toggle("active", chip.dataset.interest === "full_version")
     );
+    interestStatusEl.textContent = "";
+    interestFormEl.classList.add("hidden");
+    interestSuccessEl.classList.remove("hidden");
   } catch {
     interestStatusEl.textContent = "Не вдалося надіслати зараз. Спробуйте ще раз через хвилину.";
   }
@@ -857,6 +867,8 @@ function renderFullResult() {
   interestZoneEl.value = primaryZone.dimension;
   interestResultTitleEl.value = card.title;
   interestStatusEl.textContent = "";
+  interestFormEl.classList.remove("hidden");
+  interestSuccessEl.classList.add("hidden");
 
   fullZonesEl.appendChild(createZoneCard(primaryZone, { primary: true }));
 
