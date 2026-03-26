@@ -136,7 +136,11 @@ h3 {
 .scenario-btn {
   border: 0;
   cursor: pointer;
-  transition: transform 0.14s ease, box-shadow 0.14s ease, background-color 0.14s ease;
+  transition:
+    transform 0.14s ease,
+    box-shadow 0.14s ease,
+    background-color 0.14s ease,
+    border-color 0.14s ease;
 }
 
 .primary-btn,
@@ -165,6 +169,18 @@ h3 {
 .option-btn:hover,
 .scenario-btn:hover {
   transform: translateY(-1px);
+}
+
+.option-btn:hover,
+.scenario-btn:hover {
+  border-color: rgba(23, 60, 52, 0.24);
+  background: #fffdf6;
+  box-shadow: 0 10px 24px rgba(23, 60, 52, 0.08);
+}
+
+.scenario-btn.recommended:hover {
+  border-color: rgba(23, 60, 52, 0.34);
+  box-shadow: 0 14px 30px rgba(23, 60, 52, 0.12);
 }
 
 .scenario-grid,
