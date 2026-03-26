@@ -226,51 +226,151 @@ const questions = [
 
 const typeScores = { defined: 2, conditional: 1, externalized: 0, undefined: -1 };
 
-const regimeCopy = {
-  undefined: {
-    title: "У вас ще немає спільної системи правил",
-    text: "Ви вже рухаєтесь як пара, але ключові правила не зафіксовані. Саме в такій моделі дрібні рішення швидко перетворюються на великі конфлікти.",
+const finalCardArchetypes = {
+  undefined_money: {
+    title: "У вас немає спільного правила в грошах",
+    core: "Ви поки що вирішуєте гроші ситуативно, і кожен по-своєму відчуває, що є справедливо.",
+    next: "Одні й ті самі витрати почнуть викликати повторювані суперечки, навіть якщо спочатку це здається дрібницею.",
+    hidden: "Проблема не в сумі грошей, а в тому, що у вас різні правила про внесок і чесність.",
+    bridge: "У повній карті ви побачите, в яких саме ситуаціях ця напруга почне повторюватися.",
   },
-  partially_aligned: {
-    title: "У вас є база, але частина правил працює неявно",
-    text: "У частині питань у вас вже є розуміння, але в ключових зонах правила залишаються мовчазними. Саме там найчастіше з'являються повторювані конфлікти й розбіжності.",
+  undefined_roles: {
+    title: "У вас немає спільного правила про вклад",
+    core: "Кожен рахує внесок по-своєму: один бачить гроші, інший бачить побут, втому і емоційне навантаження.",
+    next: "Хтось почне відчувати, що тягне більше, навіть якщо формально ніхто не домовлявся про цей баланс.",
+    hidden: "Найсильніша напруга тут виникає не через лінь, а через відсутність спільного критерію справедливості.",
+    bridge: "У повній карті видно, де саме це перетворюється на образу і повторювані претензії.",
   },
-  structured: {
-    title: "У вас уже є база, але частина правил усе ще неявна",
-    text: "У вас є більше структури, ніж у більшості пар, але це ще не означає повну ясність. Найчастіше саме в таких моделях приховані розбіжності довго залишаються непомітними.",
+  undefined_decisions: {
+    title: "У вас немає спільного правила, хто вирішує",
+    core: "Важливі рішення поки що не мають чіткої межі між моє і наше.",
+    next: "Під час стресу або термінових ситуацій це швидко перетворюється на боротьбу за право вирішувати.",
+    hidden: "Проблема не в одному рішенні, а у відсутності моделі управління спільним життям.",
+    bridge: "Повна карта покаже, де саме у вас починається конфлікт влади.",
+  },
+  undefined_future: {
+    title: "У вас немає спільного правила про майбутнє",
+    core: "Найважливіші рішення ви поки що відкладаєте або не оформлюєте як спільну позицію.",
+    next: "Ці теми повернуться в найскладніший момент, коли компроміс уже буде важчим.",
+    hidden: "Проблема не в тому, що ви ще не готові, а в тому, що у вас немає спільної моделі незворотних рішень.",
+    bridge: "У повній карті видно, яке саме майбутнє ви зараз несвідомо будуєте.",
+  },
+  undefined_multi: {
+    title: "Ви вже живете разом, але у вас немає спільних правил у кількох базових зонах",
+    core: "Гроші, вклад, рішення і межі поки що існують як окремі інтуїції, а не як одна система.",
+    next: "Через це ви будете не один раз сваритися про різне, а постійно повертатися до тієї самої проблеми в нових формах.",
+    hidden: "Це не серія дрібних тем, а відсутність спільної операційної моделі.",
+    bridge: "У повній карті ви побачите, яка саме точка руйнує систему першою.",
+  },
+  partially_aligned_money: {
+    title: "У вас є домовленості про гроші, але не про їхній сенс",
+    core: "Зовні у вас ніби є модель витрат, але за нею стоять різні уявлення про чесність і роль кожного.",
+    next: "Пара буде повертатися до одних і тих самих суперечок у нових формах.",
+    hidden: "Формула витрат є, але спільного відчуття справедливості ще немає.",
+    bridge: "Повна карта покаже, який саме фінансовий сценарій буде повторюватися у вас далі.",
+  },
+  partially_aligned_roles: {
+    title: "У вас є правила, але вони не закривають відчуття несправедливості",
+    core: "Ви частково домовилися про ролі, але не про те, як оцінюється невидимий вклад.",
+    next: "Напруга не вибухає одразу, а накопичується як тиха образа.",
+    hidden: "Проблема не в ролях самих по собі, а в тому, що вклад не має спільної ваги.",
+    bridge: "У повній карті видно, де саме це почне відчуватись як я роблю більше.",
+  },
+  partially_aligned_boundaries: {
+    title: "У вас є межі, але вони не збігаються",
+    core: "Один із вас уже відчуває, що зовнішні люди впливають на пару більше, ніж варто.",
+    next: "Кожен конфлікт буде не тільки між вами, а ще й між вашими зовнішніми колами впливу.",
+    hidden: "Проблема не в близьких людях, а в тому, що роль цих людей у вашій системі не однакова для обох.",
+    bridge: "Повна карта покаже, де саме починається втрата довіри і де розмивається межа пари.",
+  },
+  partially_aligned_decisions: {
+    title: "У вас є правила рішень, але межа ще розмита",
+    core: "Ви ніби погоджуєтесь, що є особисте і спільне, але бачите цю межу по-різному.",
+    next: "Конфлікт виникатиме не через сам факт рішення, а через різне уявлення про право його приймати.",
+    hidden: "Пара вже живе у спільній системі, але управляє нею без чіткої моделі.",
+    bridge: "У повній карті буде видно, де саме ваша межа рішень починає ламатися.",
+  },
+  partially_aligned_future: {
+    title: "Ви ніби домовляєтесь про майбутнє, але не про одне й те саме",
+    core: "Один з вас говорить про бажання, інший — про умови. Формально це розмова про одне, але по суті ні.",
+    next: "Ця різниця буде повертатись у кожному рішенні про темп, готовність і відповідальність.",
+    hidden: "Раціональні умови ще не означають спільне бачення майбутнього.",
+    bridge: "Повна карта покаже, у якому саме місці ваші уявлення про майбутнє розходяться.",
+  },
+  partially_aligned_drift: {
+    title: "Зовні у вас вже є домовленості, але система повільно розходиться",
+    core: "Ви не в хаосі, але і не в повній ясності: правила є, проте кожен трохи інакше розуміє, як вони працюють.",
+    next: "Замість одного великого конфлікту у вас може виникати серія малих повторюваних зіткнень.",
+    hidden: "Найбільший ризик тут — ілюзія, що у нас все вже більш-менш узгоджено.",
+    bridge: "Повна карта покаже, де саме ваша система вже повільно розходиться.",
+  },
+  structured_money: {
+    title: "У вас є фінансова модель, але не повне відчуття чесності",
+    core: "Зовні система виглядає зрозумілою, але один із вас може переживати її як нерівну.",
+    next: "Напруга буде не постійною, а хвилями — у великих витратах, нових ролях і кризових рішеннях.",
+    hidden: "Структура є, але вона ще не гарантує внутрішнє відчуття справедливості.",
+    bridge: "Повна карта покаже, де саме ваша стабільна модель дає приховані збої.",
+  },
+  structured_boundaries: {
+    title: "У вас уже є сильні межі пари",
+    core: "Ви краще за більшість відділяєте внутрішні рішення пари від зовнішнього впливу.",
+    next: "Основні конфлікти у вас, швидше за все, будуть не про втручання ззовні, а про інші зони влади чи вклад.",
+    hidden: "Навіть сильні межі не закривають автоматично теми справедливості, рішень і майбутнього.",
+    bridge: "Повна карта покаже, яка зона лишається слабкою навіть у структурованій парі.",
+  },
+  structured_decisions: {
+    title: "У вас уже є основа спільного управління",
+    core: "Ви не віддаєте великі рішення випадку і краще за більшість розумієте, що таке наше.",
+    next: "Ризики у вас нижчі, але приховані конфлікти можуть виникати там, де правила ще не були перевірені під тиском.",
+    hidden: "Структура без стрес-тесту все ще може давати тріщини.",
+    bridge: "Повна карта покаже, яке саме правило у вас ще не проходило перевірку реальним напруженням.",
+  },
+  structured_future: {
+    title: "У вас уже є правила, але не повна ясність про незворотні рішення",
+    core: "У більшості повсякденних тем ви вже домовляєтесь, але майбутнє ще не має однаково сильної опори.",
+    next: "Поки все спокійно, це майже не відчувається. Але у рішенні про дитину, переїзд чи формалізацію різниця стане гострою.",
+    hidden: "Незворотні рішення вимагають не просто згоди, а спільної моделі тиску, темпу і відповідальності.",
+    bridge: "Повна карта покаже, де саме ваша система ще не готова до рішень без повернення назад.",
+  },
+  structured_generic: {
+    title: "У вас уже є структура, але вона ще не пройшла перевірку напругою",
+    core: "Зовні ваша система виглядає зібраною, але не всі правила були перевірені в реальних складних ситуаціях.",
+    next: "Саме тому приховані розбіжності можуть довго не проявлятися, а потім з'явитися раптово.",
+    hidden: "Проблема не в хаосі, а в тих місцях, де ясність поки що тільки здається повною.",
+    bridge: "Повна карта покаже, яке саме правило у вас ще не має реальної опори.",
   },
 };
 
 const dimensionMessages = {
   money: {
-    undefined: "Ви не обговорили, як у вас влаштовані гроші та витрати.",
-    conditional: "У вас немає єдиного розуміння, що вважати справедливим у витратах.",
-    defined: "У вас уже є базова модель розподілу грошей.",
-    externalized: "На модель грошей сильно впливають зовнішні умови, а не спільне правило.",
+    undefined: "І тоді навіть дрібні витрати швидко починають відчуватись як несправедливі.",
+    conditional: "Кожна нова витрата знову ставить питання, що тут чесно.",
+    defined: "У вас уже є правило, як поводитися з грошима.",
+    externalized: "Гроші у вас вирішують обставини, а не спільна домовленість.",
   },
   roles: {
-    undefined: "Ви не визначили, як рахується внесок кожного у спільне життя.",
-    conditional: "Вклад оцінюється ситуативно, без спільного правила.",
-    defined: "У вас є базове розуміння внеску і навантаження.",
-    externalized: "Вклад оцінюється через зовнішні фактори, а не через внутрішню домовленість.",
+    undefined: "І тоді кожен починає відчувати, що вкладається більше.",
+    conditional: "Вклад ніби розподілений, але образа може накопичуватись мовчки.",
+    defined: "У вас уже є спільне розуміння, як виглядає вклад.",
+    externalized: "Внесок оцінюється зовнішніми обставинами, а не вашим правилом.",
   },
   boundaries: {
-    undefined: "Ви не визначили, де проходять межі пари і що можна виносити назовні.",
-    conditional: "Межі пари визначаються по ситуації, а не заздалегідь.",
-    defined: "Ви розумієте, де проходить межа вашої пари.",
-    externalized: "Роль зовнішніх людей у вашій системі фактично не визначена.",
+    undefined: "І тоді межі пари з'являються вже після порушення довіри.",
+    conditional: "Межі існують, але кожен відчуває їх по-своєму.",
+    defined: "У вас уже є межа, яка захищає пару як окрему систему.",
+    externalized: "Треті люди вже впливають на те, що має вирішуватись між вами.",
   },
   decisions: {
-    undefined: "Не визначено, як приймаються великі рішення.",
-    conditional: "Модель прийняття рішень частково є, але не до кінця зрозуміла.",
-    defined: "У вас є правило, де особисте, а де вже спільне рішення.",
-    externalized: "На рішення сильно впливають зовнішні фактори, а не спільне правило.",
+    undefined: "І під час напруги починається боротьба за право вирішувати.",
+    conditional: "Межа між моїм і нашим є, але вона ще не витримує стресу.",
+    defined: "У вас уже є правило, де особисте, а де спільне рішення.",
+    externalized: "На великі рішення впливають не тільки ви двоє, а й зовнішній тиск.",
   },
   future: {
-    undefined: "Ви не визначили, як приймаються стратегічні рішення про майбутнє.",
-    conditional: "Майбутнє залежить від умов, але не від чіткої спільної позиції.",
-    defined: "У вас є базове правило для рішень про майбутнє.",
-    externalized: "Рішення про майбутнє задаються тиском або зовнішніми факторами.",
+    undefined: "І питання про майбутнє повертається тоді, коли домовлятися вже важче.",
+    conditional: "Майбутнє ніби обговорюється, але не з однієї і тієї самої позиції.",
+    defined: "У вас уже є спільне правило для рішень, які не можна відкотити.",
+    externalized: "Майбутнє може визначатися тиском, а не вашим спільним рішенням.",
   },
 };
 
@@ -311,8 +411,15 @@ const progressBarEl = document.getElementById("progress-bar");
 const questionTitleEl = document.getElementById("question-title");
 const questionTextEl = document.getElementById("question-text");
 const questionOptionsEl = document.getElementById("question-options");
+const previewTitleEl = document.getElementById("preview-title");
+const previewLeadEl = document.getElementById("preview-lead");
 const previewSummaryEl = document.getElementById("preview-summary");
 const previewZonesEl = document.getElementById("preview-zones");
+const paywallTitleEl = document.getElementById("paywall-title");
+const paywallCopyEl = document.getElementById("paywall-copy");
+const paywallIntroEl = document.getElementById("paywall-intro");
+const paywallListEl = document.getElementById("paywall-list");
+const paywallSubtleEl = document.getElementById("paywall-subtle");
 const fullZonesEl = document.getElementById("full-zones");
 const definedAreasEl = document.getElementById("defined-areas");
 const undefinedAreasEl = document.getElementById("undefined-areas");
@@ -383,7 +490,7 @@ function renderQuestion() {
   question.options.forEach((option) => {
     const button = document.createElement("button");
     button.className = "option-btn";
-    button.innerHTML = `<strong>${option.text}</strong><span>${option.caption || typeLabel(option.mapping.type)}</span>`;
+    button.innerHTML = `<strong>${option.text}</strong>${option.caption ? `<span>${option.caption}</span>` : ""}`;
     button.addEventListener("click", () => {
       state.answers[state.currentIndex] = {
         questionId: question.id,
@@ -465,44 +572,121 @@ function computeRegime(aggregated) {
   return { id: "partially_aligned", totalScore, undefinedCount };
 }
 
-function buildZone(dimension, status) {
+function buildZone(dimension, data) {
   return {
     dimension,
-    status,
-    message: dimensionMessages[dimension][status] || dimensionMessages[dimension].defined,
+    status: data.status,
+    normalized: data.normalized,
+    message: dimensionMessages[dimension][data.status] || dimensionMessages[dimension].defined,
   };
 }
 
-function getSortedZones() {
-  const aggregated = aggregateAnswers();
+function getSortedZones(aggregated = aggregateAnswers()) {
   return Object.entries(aggregated)
-    .map(([dimension, data]) => buildZone(dimension, data.status))
-    .sort((a, b) => statusPriority(a.status) - statusPriority(b.status));
+    .map(([dimension, data]) => buildZone(dimension, data))
+    .sort((a, b) => {
+      const priorityDiff = statusPriority(a.status) - statusPriority(b.status);
+      if (priorityDiff !== 0) return priorityDiff;
+      return a.normalized - b.normalized;
+    });
+}
+
+function getPrimaryZone(regime, zones) {
+  const weakZones = zones.filter((zone) => zone.status !== "defined");
+
+  if (regime.id === "undefined" && weakZones.length >= 3) {
+    return "multi";
+  }
+
+  if (regime.id === "partially_aligned" && weakZones.length >= 3) {
+    return "drift";
+  }
+
+  if (weakZones.length > 0) {
+    return weakZones[0].dimension;
+  }
+
+  return zones[0]?.dimension || "generic";
+}
+
+function matchFinalCard(aggregated = aggregateAnswers()) {
+  const regime = computeRegime(aggregated);
+  const zones = getSortedZones(aggregated);
+  const primaryZone = getPrimaryZone(regime, zones);
+  const directKey = `${regime.id}_${primaryZone}`;
+
+  if (finalCardArchetypes[directKey]) {
+    return { key: directKey, card: finalCardArchetypes[directKey], regime, zones };
+  }
+
+  if (regime.id === "undefined") {
+    return {
+      key: "undefined_multi",
+      card: finalCardArchetypes.undefined_multi,
+      regime,
+      zones,
+    };
+  }
+
+  if (regime.id === "partially_aligned") {
+    return {
+      key: "partially_aligned_drift",
+      card: finalCardArchetypes.partially_aligned_drift,
+      regime,
+      zones,
+    };
+  }
+
+  return {
+    key: "structured_generic",
+    card: finalCardArchetypes.structured_generic,
+    regime,
+    zones,
+  };
+}
+
+function renderPaywall(card, zones) {
+  paywallTitleEl.textContent = "Подивитися, як це почне проявлятися в реальному житті";
+  paywallCopyEl.textContent = card.hidden;
+  paywallIntroEl.textContent = "Це не тест. Це вже ваша модель рішень.";
+
+  const firstConflictZone = zones.find((zone) => zone.status !== "defined") || zones[0];
+  paywallListEl.innerHTML = "";
+
+  [
+    `де саме у вас почне повторюватися напруга в зоні “${translateDimension(firstConflictZone.dimension)}”`,
+    "який сценарій конфлікту у вас запускається першим",
+    "які правила у вас поки що тримаються тільки на мовчазних домовленостях",
+  ].forEach((text) => {
+    paywallListEl.appendChild(createListItem(text));
+  });
+
+  paywallSubtleEl.textContent = card.bridge;
 }
 
 function renderPreview() {
-  const aggregated = aggregateAnswers();
-  const zones = getSortedZones();
-  const activeTension = zones.filter((zone) => zone.status !== "defined").length;
-  const tensionLabel = activeTension >= 3 ? "3+ ключових зонах" : "кількох важливих зонах";
-
+  const { card, zones } = matchFinalCard();
+  previewTitleEl.textContent = card.title;
+  previewLeadEl.textContent =
+    "Зараз видно тільки перший патерн. Саме так повторювані конфлікти виглядають до того, як їх починають помічати.";
   previewSummaryEl.innerHTML = `
-    <strong>Попередній сигнал:</strong>
-    <p>У вас уже є розходження у <strong>${tensionLabel}</strong>, які з часом майже завжди перетворюються на повторювані конфлікти. Зараз видно тільки верхній шар. Повна карта покаже, де саме різні очікування вже переходять у системний ризик.</p>
+    <p>${card.core}</p>
+    <p><strong>${card.next}</strong></p>
+    <div class="preview-cut">Зараз це ще виглядає як окремі дрібні теми. Насправді це вже одна й та сама модель рішень.</div>
   `;
-
   previewZonesEl.innerHTML = "";
   zones.slice(0, 2).forEach((zone) => {
     previewZonesEl.appendChild(createZoneCard(zone));
   });
+  renderPaywall(card, zones);
 }
 
 function renderFullResult() {
-  const regime = computeRegime(aggregateAnswers());
-  const zones = getSortedZones();
+  const aggregated = aggregateAnswers();
+  const { card, zones } = matchFinalCard(aggregated);
 
-  resultRegimeTitleEl.textContent = regimeCopy[regime.id].title;
-  resultRegimeTextEl.textContent = regimeCopy[regime.id].text;
+  resultRegimeTitleEl.textContent = card.title;
+  resultRegimeTextEl.textContent = card.hidden;
 
   fullZonesEl.innerHTML = "";
   definedAreasEl.innerHTML = "";
@@ -564,15 +748,6 @@ function translateDimension(dimension) {
     future: "Майбутнє",
     exit: "Складні сценарії",
   }[dimension] || dimension;
-}
-
-function typeLabel(type) {
-  return {
-    defined: "є чітка позиція",
-    conditional: "залежить від ситуації",
-    externalized: "є зовнішній вплив",
-    undefined: "ще не визначено",
-  }[type];
 }
 
 function getCurrentScenario() {

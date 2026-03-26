@@ -78,35 +78,21 @@
       <section id="preview-screen" class="screen">
         <div class="content-card">
           <p class="eyebrow">Результат</p>
-          <h2>Ви вже побачили не “проблеми”, а різні правила життя.</h2>
-          <p class="lead-small">
-            Нижче — лише короткий зріз. Саме в цих зонах у пар найчастіше починаються повторювані
-            конфлікти.
-          </p>
+          <h2 id="preview-title"></h2>
+          <p id="preview-lead" class="lead-small"></p>
           <div id="preview-summary" class="preview-summary"></div>
           <div id="preview-zones" class="zone-list"></div>
           <div class="paywall-card">
-            <h3>Побачити, як це виглядає у реальному житті</h3>
-            <p>
-              Далі — ваш реальний режим, усі зони напруги, потенційні конфлікти і те, де саме
-              система вже тримається на неявних правилах.
-            </p>
+            <h3 id="paywall-title"></h3>
+            <p id="paywall-copy"></p>
+            <div class="paywall-divider"></div>
+            <p id="paywall-intro" class="paywall-intro"></p>
             <div class="locked-list">
               <strong>У повній карті ви побачите:</strong>
-              <ul class="bullet-list compact-list">
-                <li>ваш реальний сценарій конфліктів</li>
-                <li>де саме починається напруга</li>
-                <li>які рішення у вас досі не узгоджені</li>
-              </ul>
+              <ul id="paywall-list" class="bullet-list compact-list"></ul>
             </div>
-            <button id="unlock-btn" class="primary-btn">Побачити ваш реальний сценарій</button>
-            <p class="subtle">
-              5–7 хвилин зараз можуть зекономити місяці конфліктів потім.
-            </p>
-            <p class="subtle">
-              У цій демо-версії оплата ще не підключена. Кнопка відкриває повний результат для
-              перевірки сценарію.
-            </p>
+            <button id="unlock-btn" class="primary-btn">Подивитися повну карту</button>
+            <p id="paywall-subtle" class="subtle"></p>
           </div>
         </div>
       </section>
@@ -137,7 +123,7 @@
           </div>
 
           <div class="actions-row">
-            <button id="restart-btn" class="secondary-btn">Почати заново</button>
+            <button id="restart-btn" class="secondary-btn">Пройти інший сценарій</button>
           </div>
         </div>
       </section>
