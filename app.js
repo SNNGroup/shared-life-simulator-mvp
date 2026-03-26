@@ -388,13 +388,13 @@ const conflictMessages = {
 const postPaywallScenarios = {
   money: {
     scene:
-      "Ви щось купуєте або плануєте витрати. І в якийсь момент звучить: чому знову я або ми ж домовлялись інакше. І навіть дрібна річ раптом стає напруженням.",
+      "Ви домовляєтесь про щось просте. Наприклад — витрати або покупки.",
     conflict:
-      "Один відчуває, що вкладається більше. Інший — що все нормально. Але ці відчуття не співпадають.",
+      "І раптом звучить: чому знову я або ми ж домовлялись інакше. І навіть дрібна річ стає напруженням.",
     pattern:
-      "І кожна нова витрата знову піднімає це питання. Без чіткої відповіді, що для вас означає справедливо.",
+      "Один відчуває, що вкладається більше. Інший — що все нормально. Але ці відчуття не співпадають. І кожна нова витрата знову повертає до цього питання — без відповіді, що для вас означає справедливо.",
     hit:
-      "І поступово з'являється не розмова про гроші, а відчуття: мене тут недооцінюють.",
+      "І поступово це вже не про гроші, а про відчуття: мене тут недооцінюють.",
   },
   decisions: {
     scene:
@@ -459,6 +459,7 @@ const undefinedAreasEl = document.getElementById("undefined-areas");
 const conflictsEl = document.getElementById("conflicts");
 const resultRegimeTitleEl = document.getElementById("result-regime-title");
 const resultRegimeTextEl = document.getElementById("result-regime-text");
+const resultContextLineEl = document.getElementById("result-context-line");
 const resultStoryEl = document.getElementById("result-story");
 const storySceneEl = document.getElementById("story-scene");
 const storyConflictEl = document.getElementById("story-conflict");
@@ -729,6 +730,15 @@ function renderFullResult() {
 
   resultRegimeTitleEl.textContent = card.title;
   resultRegimeTextEl.textContent = card.hidden;
+
+  if (state.selectedScenario === "child" && primaryZone.dimension !== "future") {
+    resultContextLineEl.textContent =
+      "Це особливо проявляється, коли ви думаєте про майбутнє — наприклад, про дитину.";
+    resultContextLineEl.classList.remove("hidden");
+  } else {
+    resultContextLineEl.textContent = "";
+    resultContextLineEl.classList.add("hidden");
+  }
 
   fullZonesEl.innerHTML = "";
   definedAreasEl.innerHTML = "";
